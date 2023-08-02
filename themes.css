@@ -1,0 +1,29 @@
+[data-theme="light"] {
+    --bg-color: #f4f4f4;
+    --text-color: #333;
+    --button-bg: #007bff;
+    --button-text: #fff;
+    --pop-up-bg: #fff;
+    --pop-up-text: #000;
+    --list-bg: #fff;
+    --list-text: #000;
+    --card-header-bg: #007bff; /* Choose the color you want */
+    --card-header-text: #fff; /* Choose the color you want */
+}
+
+[data-theme="dark"] {
+    --bg-color: #242424; /* lighter than before */
+    --text-color: #e0e0e0; /* lighter than before */
+    --button-bg: #607d8b; /* a muted blue */
+    --button-text: #ffffff; /* white text */
+    --pop-up-bg: #424242; /* slightly lighter than background */
+    --pop-up-text: #ffffff; /* white text */
+    --list-bg: #424242; /* same as pop-up */
+    --list-text: #ffffff; /* white text */
+    --card-header-bg: pink; /* Choose the color you want */
+    --card-header-text: #ffffff; /* Choose the color you want */
+}
+
+
+
+
