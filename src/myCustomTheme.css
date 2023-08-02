@@ -1,0 +1,36 @@
+/* customTheme.css */
+
+.__json-pretty__ {
+    line-height: 1.3;
+    color: #333333; /* Dark gray for general text */
+    background: #FFFFFF; /* White background */
+    overflow: auto;
+    font-family: 'Courier New', monospace; /* Monospace font for better alignment */
+}
+
+.__json-pretty__ .__json-key__ {
+    color: #1F618D; /* Dark Blue for keys */
+}
+
+.__json-pretty__ .__json-value__ {
+    color: #148F77; /* Dark Sea Green for general values */
+}
+
+.__json-pretty__ .__json-string__ {
+    color: #AF7AC5; /* Medium Purple for strings */
+}
+
+.__json-pretty__ .__json-boolean__ {
+    color: #D68910; /* Dark Orange for booleans */
+}
+
+.__json-pretty__ .__json-number__ {
+    color: #CB4335; /* Dark Red for numbers */
+}
+
+.__json-pretty-error__ {
+    line-height: 1.3;
+    color: #B03A2E; /* Dark Red for errors */
+    background: #FFFFFF; /* White background */
+    overflow: auto;
+}

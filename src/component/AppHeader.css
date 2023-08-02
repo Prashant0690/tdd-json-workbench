@@ -1,0 +1,48 @@
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--bs-light);
+    color: var(--bs-dark);
+}
+
+.app-header[data-bs-theme='dark'] {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+}
+
+.theme-toggle-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+
+.logo {
+    font-size: 2em;
+    font-weight: bold;
+    /*text-transform: uppercase;*/
+    display: inline-block;
+}
+
+.logo-letter {
+    padding: 0 0.05em;
+}
+
+.logo-letter-1 {
+    color: #f44336; /* Red */
+}
+
+.logo-letter-2 {
+    color: #E91E63; /* Pink */
+}
+
+.logo-letter-3 {
+    color: #9C27B0; /* Purple */
+}
+
+.logo-letter-4 {
+    color: #673AB7; /* Deep Purple */
+}
