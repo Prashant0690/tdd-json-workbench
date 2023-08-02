@@ -201,11 +201,12 @@ export const ApiDataProvider = ({ children }) => {
         });
     };
 
-    const updateTest = (apiName, endPointName, testName, request, response) => {
+    const updateTest = (apiName, endPointName, testName, url, request, response) => {
         const newTestData = {
             apiName,
             endPointName,
             testName,
+            url,
             request,
             response
         };

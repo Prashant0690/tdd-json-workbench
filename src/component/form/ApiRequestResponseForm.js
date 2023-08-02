@@ -12,7 +12,7 @@ import CommonHeadersSelect from "./CommonHeadersSelect";
 
 function ApiRequestResponseForm({data, onHide}) {
     const {updateTest} = useContext(ApiDataContext);
-    const {apiName, endPointName, testName, ...restOfData} = data;
+    const {apiName, endPointName, testName, url, ...restOfData} = data;
     const [apiData, ] = useState(cloneDeep(restOfData));
     const [requestMethod, setRequestMethod] = useState(apiData?.request?.method || 'GET');
     const [requestPath, setRequestPath] = useState(apiData?.request?.path || '');
@@ -80,7 +80,7 @@ function ApiRequestResponseForm({data, onHide}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const updatedData = getUpdatedData();
-        updateTest(apiName, endPointName, testName, updatedData.request, updatedData.response);
+        updateTest(apiName, endPointName, testName, url, updatedData.request, updatedData.response);
         onHide();
     };
 
