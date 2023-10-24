@@ -110,10 +110,13 @@ export const ApiDataProvider = ({ children }) => {
     };
 
     const addEndpoint = (apiName, endPointName) => {
+        const item = apiDataState.find(entry => entry.apiName === apiName);
+
         const newEndPoint = {
             apiName,
             endPointName,
             testName: null,
+            url: item ? item.url : "",
             request: {},
             response: {}
         };
