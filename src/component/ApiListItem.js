@@ -4,7 +4,6 @@ import {useContext, useState} from "react";
 import ApiDataContext from "../ApiDataContext";
 
 function ApiListItem({ apiName, url }) {
-
     const { getApiEndpoints, deleteApiName, updateApiName, addEndpoint, updateApiUrl } = useContext(ApiDataContext);
     const [showModal, setShowModal] = useState(false);
     const [newApiName, setNewApiName] = useState(apiName);
@@ -49,7 +48,7 @@ function ApiListItem({ apiName, url }) {
 
     const handleEndpointSubmit = () => {
         addEndpoint(apiName, newEndpointName);
-        setNewEndpointName(null);
+        setNewEndpointName('');
         setShowEndpointModal(false);
     };
 
@@ -75,154 +74,160 @@ function ApiListItem({ apiName, url }) {
         setNewUrl(e.target.value);
     };
 
-
-
     return (
-    <Card className="mb-4">
-        <Card.Header as="h2" className="card-header-custom d-flex justify-content-between align-items-center">
-            {apiName}
-            <div>
-                <button className="btn btn-light mx-1" onClick={handleUpdateClick}>
-                    <i className="fas fa-edit" aria-hidden="true"></i>
-                </button>
-                <button className="btn btn-light mx-1 text-danger" onClick={handleDeleteClick}>
-                    <i className="fas fa-trash" aria-hidden="true"></i>
-                </button>
-                <button className="btn btn-light mx-1" onClick={handleAddEndpointClick}>
-                    Add Endpoint <i className="fas fa-plus" aria-hidden="true"></i>
-                </button>
-            </div>
-        </Card.Header>
+        <Card className="mb-4" id={`api-card-${apiName}`}>
+            <Card.Header as="h2" className="card-header-custom d-flex justify-content-between align-items-center">
+                {apiName}
+                <div>
+                    <button
+                        id={`edit-api-${apiName}`}
+                        className="btn btn-light mx-1"
+                        onClick={handleUpdateClick}
+                    >
+                        <i className="fas fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button
+                        id={`delete-api-${apiName}`}
+                        className="btn btn-light mx-1 text-danger"
+                        onClick={handleDeleteClick}
+                    >
+                        <i className="fas fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <button
+                        id={`add-endpoint-${apiName}`}
+                        className="btn btn-light mx-1"
+                        onClick={handleAddEndpointClick}
+                    >
+                        Add Endpoint <i className="fas fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </Card.Header>
 
-        <Card.Body>
-            <Row className="mb-3 align-items-center">
-                <Col sm={1}>
-                    <label className="my-1 mr-2" htmlFor="apiUrl">
-                        URL
-                    </label>
-                </Col>
-                <Col sm={7}>
-                    <FormControl
-                        type="text"
-                        id="apiUrl"
-                        value={newUrl}
-                        onChange={handleUrlInputChange}
-                        disabled={!editUrlMode}
-                    />
-                </Col>
-                {editUrlMode ? (
-                    <>
-                        <Col sm={1}>
-                            <Button variant="outline-secondary" onClick={handleCancelUrlUpdate}>
-                                Cancel
-                            </Button>
-                        </Col>
-                        <Col sm={1}>
-                            <Button variant="outline-primary" onClick={handleUpdateUrlClick}>
-                                Update
-                            </Button>
-                        </Col>
-                    </>
-                ) : (
-                    <Col sm={2}>
-                        <Button variant="outline-primary" onClick={handleEditUrlClick}>
-                            Edit URL
-                        </Button>
+            <Card.Body>
+                <Row className="mb-3 align-items-center">
+                    <Col sm={1}>
+                        <label className="my-1 mr-2" htmlFor={`api-url-${apiName}`}>
+                            URL
+                        </label>
                     </Col>
-                )}
-            </Row>
-
-            {getApiEndpoints(apiName).map((endpointName, index) => (
-                endpointName &&
-                <EndpointListItem
-                    key={index}
-                    endpointName={endpointName}
-                    apiName={apiName}
-                    url={url}
-                />
-            ))}
-        </Card.Body>
-
-        {/* Update API Name Modal */}
-        <Modal show={showModal} onHide={handleCloseModal}>
-            {/* Modal Header */}
-            <Modal.Header closeButton>
-                <Modal.Title>Update API Name</Modal.Title>
-            </Modal.Header>
-            {/* Modal Body */}
-            <Modal.Body>
-                <form>
-                    <div className="mb-3">
-                        <label htmlFor="currentApiName" className="form-label">
-                            Current API Name
-                        </label>
-                        <input
+                    <Col sm={7}>
+                        <FormControl
                             type="text"
-                            className="form-control"
-                            id="currentApiName"
-                            value={apiName}
-                            readOnly disabled
+                            id={`api-url-${apiName}`}
+                            value={newUrl}
+                            onChange={handleUrlInputChange}
+                            disabled={!editUrlMode}
                         />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="newApiName" className="form-label">
-                            New API Name
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="newApiName"
-                            value={newApiName}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </form>
-            </Modal.Body>
-            {/* Modal Footer */}
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseModal}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                    Update
-                </Button>
-            </Modal.Footer>
-        </Modal>
+                    </Col>
+                    {editUrlMode ? (
+                        <>
+                            <Col sm={1}>
+                                <Button id={`cancel-url-update-${apiName}`} variant="outline-secondary" onClick={handleCancelUrlUpdate}>
+                                    Cancel
+                                </Button>
+                            </Col>
+                            <Col sm={1}>
+                                <Button id={`update-url-${apiName}`} variant="outline-primary" onClick={handleUpdateUrlClick}>
+                                    Update
+                                </Button>
+                            </Col>
+                        </>
+                    ) : (
+                        <Col sm={2}>
+                            <Button id={`edit-url-${apiName}`} variant="outline-primary" onClick={handleEditUrlClick}>
+                                Edit URL
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
 
+                {getApiEndpoints(apiName).map((endpointName, index) => (
+                    endpointName &&
+                    <EndpointListItem
+                        key={index}
+                        id={`endpoint-${apiName}-${endpointName}`}
+                        endpointName={endpointName}
+                        apiName={apiName}
+                        url={url}
+                    />
+                ))}
+            </Card.Body>
 
-        {/* New Endpoint Modal */}
-        <Modal show={showEndpointModal} onHide={handleCloseEndpointModal}>
-            <Modal.Header closeButton>
-                <Modal.Title>Add New Endpoint</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <form>
-                    <div className="mb-3">
-                        <label htmlFor="newEndpointName" className="form-label">
-                            New Endpoint Name
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="newEndpointName"
-                            value={newEndpointName}
-                            onChange={handleEndpointInputChange}
-                        />
-                    </div>
-                </form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseEndpointModal}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleEndpointSubmit}>
-                    Add
-                </Button>
-            </Modal.Footer>
-        </Modal>
+            {/* Update API Name Modal */}
+            <Modal show={showModal} onHide={handleCloseModal} id={`update-api-name-modal-${apiName}`}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Update API Name</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <div className="mb-3">
+                            <label htmlFor={`current-api-name-${apiName}`} className="form-label">
+                                Current API Name
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id={`current-api-name-${apiName}`}
+                                value={apiName}
+                                readOnly disabled
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor={`new-api-name-${apiName}`} className="form-label">
+                                New API Name
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id={`new-api-name-${apiName}`}
+                                value={newApiName}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal} id={`close-update-api-name-modal-${apiName}`}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit} id={`submit-update-api-name-${apiName}`}>
+                        Update
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
-    </Card>
-  );
+            {/* New Endpoint Modal */}
+            <Modal show={showEndpointModal} onHide={handleCloseEndpointModal} id={`add-new-endpoint-modal-${apiName}`}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add New Endpoint</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <div className="mb-3">
+                            <label htmlFor={`new-endpoint-name-${apiName}`} className="form-label">
+                                New Endpoint Name
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id={`new-endpoint-name-${apiName}`}
+                                value={newEndpointName}
+                                onChange={handleEndpointInputChange}
+                            />
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEndpointModal} id={`close-add-new-endpoint-modal-${apiName}`}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleEndpointSubmit} id={`submit-add-new-endpoint-${apiName}`}>
+                        Add
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </Card>
+    );
 }
 
 export default ApiListItem;

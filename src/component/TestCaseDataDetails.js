@@ -13,48 +13,48 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
   const parsedResponseBody = hasResponseBody ? JSON.parse(data.response.body) : null;
 
   return (
-      <Modal size="lg" show={show} onHide={handleClose} centered >
+      <Modal size="lg" show={show} onHide={handleClose} centered id={`test-case-modal-${data.testName}`}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '95%' }}>
+          <Modal.Title id={`test-case-title-${data.testName}`} style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '95%' }}>
             {data.testName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs defaultActiveKey="fullTest">
+          <Tabs defaultActiveKey="fullTest" id={`test-case-tabs-${data.testName}`}>
             {/* Full Test Object Tab */}
-            <Tab eventKey="fullTest" title="Full Test Object">
+            <Tab eventKey="fullTest" title="Full Test Object" id={`full-test-tab-${data.testName}`}>
               <Card>
                 <Card.Header>
                   <strong>Full Test Object:</strong>
                 </Card.Header>
                 <ListGroup variant="flush">
-                  <ListGroup.Item>
+                  <ListGroup.Item id={`full-test-content-${data.testName}`}>
                     <pre>{JSON.stringify(data, null, 2)}</pre>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
             </Tab>
             {/* Request Tab */}
-            <Tab eventKey="request" title="Request">
+            <Tab eventKey="request" title="Request" id={`request-tab-${data.testName}`}>
               <Card>
                 <Card.Header>
                   <strong>Request:</strong>
                 </Card.Header>
                 <ListGroup variant="flush">
-                  <ListGroup.Item>
+                  <ListGroup.Item id={`request-content-${data.testName}`}>
                     <pre>{JSON.stringify(data.request, null, 2)}</pre>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
             </Tab>
             {/* Response Tab */}
-            <Tab eventKey="response" title="Response">
+            <Tab eventKey="response" title="Response" id={`response-tab-${data.testName}`}>
               <Card>
                 <Card.Header>
                   <strong>Response:</strong>
                 </Card.Header>
                 <ListGroup variant="flush">
-                  <ListGroup.Item>
+                  <ListGroup.Item id={`response-content-${data.testName}`}>
                     <pre>{JSON.stringify(data.response, null, 2)}</pre>
                   </ListGroup.Item>
                 </ListGroup>
@@ -62,13 +62,13 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
             </Tab>
             {/* Request Body (JSON) Tab */}
             {hasRequestBody && (
-                <Tab eventKey="requestBody" title="Request Body (JSON)">
+                <Tab eventKey="requestBody" title="Request Body (JSON)" id={`request-body-tab-${data.testName}`}>
                   <Card>
                     <Card.Header>
                       <strong>Request Body:</strong>
                     </Card.Header>
                     <ListGroup variant="flush">
-                      <ListGroup.Item>
+                      <ListGroup.Item id={`request-body-content-${data.testName}`}>
                         <pre>{JSON.stringify(parsedRequestBody, null, 2)}</pre>
                       </ListGroup.Item>
                     </ListGroup>
@@ -77,22 +77,21 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
             )}
             {/* Response Body (JSON) Tab */}
             {hasResponseBody && (
-                <Tab eventKey="responseBody" title="Response Body (JSON)">
+                <Tab eventKey="responseBody" title="Response Body (JSON)" id={`response-body-tab-${data.testName}`}>
                   <Card>
                     <Card.Header>
                       <strong>Response Body:</strong>
                     </Card.Header>
                     <ListGroup variant="flush">
-                      <ListGroup.Item>
+                      <ListGroup.Item id={`response-body-content-${data.testName}`}>
                         <pre>{JSON.stringify(parsedResponseBody, null, 2)}</pre>
                       </ListGroup.Item>
                     </ListGroup>
                   </Card>
                 </Tab>
             )}
-            <Tab eventKey="apiRequestResponse" title={"Edit Request/Response"}>
-              {/*<i className="fas fa-edit" aria-hidden="true"></i>*/}
-              <ApiRequestResponseForm data={data} onHide={handleClose}/>
+            <Tab eventKey="apiRequestResponse" title={"Edit Request/Response"} id={`edit-request-response-tab-${data.testName}`}>
+              <ApiRequestResponseForm data={data} onHide={handleClose} />
             </Tab>
           </Tabs>
         </Modal.Body>

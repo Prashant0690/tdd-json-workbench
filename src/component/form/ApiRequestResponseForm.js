@@ -1,25 +1,22 @@
-import React, {useContext, useState} from 'react';
-import {Button, Col, Container, Form, Row, Tab, Tabs} from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import { Button, Col, Container, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import NameValuePairInputForm from "./NameValuePairInputForm";
-import {cloneDeep, isEmpty, omitBy} from 'lodash';
-import JsonTextAreaFormatter from "./JsonTextAreaFormatter"
+import { cloneDeep, isEmpty, omitBy } from 'lodash';
+import JsonTextAreaFormatter from "./JsonTextAreaFormatter";
 import ApiDataContext from "../../ApiDataContext";
-import {HTTP_METHODS} from "../../constant/constants";
+import { HTTP_METHODS } from "../../constant/constants";
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import CommonHeadersSelect from "./CommonHeadersSelect";
 
-
-
-function ApiRequestResponseForm({data, onHide}) {
-    const {updateTest} = useContext(ApiDataContext);
-    const {apiName, endPointName, testName, url, ...restOfData} = data;
+function ApiRequestResponseForm({ data, onHide }) {
+    const { updateTest } = useContext(ApiDataContext);
+    const { apiName, endPointName, testName, url, ...restOfData } = data;
     const [apiData, ] = useState(cloneDeep(restOfData));
     const [requestMethod, setRequestMethod] = useState(apiData?.request?.method || 'GET');
     const [requestPath, setRequestPath] = useState(apiData?.request?.path || '');
     const [requestHeaders, setRequestHeaders] = useState(apiData?.request?.headers || {});
     const [requestQueryParams, setRequestQueryParams] = useState(apiData?.request?.queryParams || {});
     const [requestPathParams, setRequestPathParams] = useState(apiData?.request?.pathParams || {});
-
     const [requestBody, setRequestBody] = useState(() => {
         try {
             return JSON.parse(apiData?.request?.body || '{}');
@@ -36,20 +33,6 @@ function ApiRequestResponseForm({data, onHide}) {
             return {};
         }
     });
-
-
-    /*useEffect(() => {
-        setApiData(cloneDeep(data));
-        setRequestMethod(apiData?.request?.method || 'GET');
-        setRequestPath(apiData?.request?.path || '');
-        setRequestHeaders(apiData?.request?.headers || {});
-        setRequestBody(apiData?.request?.body || '');
-        setResponseStatus(apiData?.response?.status || '');
-        setResponseHeaders(apiData?.response?.headers || {});
-        setResponseBody(apiData?.response?.body || '');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);*/
-
 
     const getUpdatedData = () => {
         const updatedData = {
@@ -100,17 +83,18 @@ function ApiRequestResponseForm({data, onHide}) {
     return (
         <div className="p-3">
             <Form onSubmit={handleSubmit}>
-                <Tabs defaultActiveKey="request" id="request-response-tabs">
-                    <Tab eventKey="request" title="Request">
+                <Tabs defaultActiveKey="request" id={`request-response-tabs-${testName}`}>
+                    <Tab eventKey="request" title="Request" id={`request-tab-${testName}`}>
                         <br />
-                        <Tabs defaultActiveKey="url_method" id="request-tabs">
-                            <Tab eventKey="url_method" title="URL & Method">
+                        <Tabs defaultActiveKey="url_method" id={`request-tabs-${testName}`}>
+                            <Tab eventKey="url_method" title="URL & Method" id={`url-method-tab-${testName}`}>
                                 <Container fluid>
                                     <Row>
                                         <Col md={2}>
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Method</Form.Label>
                                                 <Form.Control
+                                                    id={`request-method-${testName}`}
                                                     as="select"
                                                     value={requestMethod}
                                                     onChange={(e) => setRequestMethod(e.target.value)}
@@ -126,6 +110,7 @@ function ApiRequestResponseForm({data, onHide}) {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Path</Form.Label>
                                                 <Form.Control
+                                                    id={`request-path-${testName}`}
                                                     type="text"
                                                     value={requestPath}
                                                     onChange={(e) => setRequestPath(e.target.value)}
@@ -135,20 +120,20 @@ function ApiRequestResponseForm({data, onHide}) {
                                     </Row>
                                 </Container>
                             </Tab>
-                            <Tab eventKey="headers" title="Headers">
+                            <Tab eventKey="headers" title="Headers" id={`request-headers-tab-${testName}`}>
                                 <Form.Label>Headers</Form.Label>
-                                <CommonHeadersSelect headers={requestHeaders} setHeaders={setRequestHeaders}/>
-                                <NameValuePairInputForm headers={requestHeaders} setHeaders={setRequestHeaders}/>
+                                <CommonHeadersSelect headers={requestHeaders} setHeaders={setRequestHeaders} />
+                                <NameValuePairInputForm headers={requestHeaders} setHeaders={setRequestHeaders} />
                             </Tab>
-                            <Tab eventKey="queryParams" title="Query Parameters">
+                            <Tab eventKey="queryParams" title="Query Parameters" id={`query-params-tab-${testName}`}>
                                 <Form.Label>Query Parameters</Form.Label>
-                                <NameValuePairInputForm headers={requestQueryParams} setHeaders={setRequestQueryParams}/>
+                                <NameValuePairInputForm headers={requestQueryParams} setHeaders={setRequestQueryParams} />
                             </Tab>
-                            <Tab eventKey="pathParams" title="Path Parameters">
+                            <Tab eventKey="pathParams" title="Path Parameters" id={`path-params-tab-${testName}`}>
                                 <Form.Label>Path Parameters</Form.Label>
-                                <NameValuePairInputForm headers={requestPathParams} setHeaders={setRequestPathParams}/>
+                                <NameValuePairInputForm headers={requestPathParams} setHeaders={setRequestPathParams} />
                             </Tab>
-                            <Tab eventKey="body" title="Body">
+                            <Tab eventKey="body" title="Body" id={`request-body-tab-${testName}`}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Body</Form.Label>
                                     <JsonTextAreaFormatter
@@ -160,15 +145,14 @@ function ApiRequestResponseForm({data, onHide}) {
                         </Tabs>
                     </Tab>
 
-                    <Tab eventKey="response" title="Response">
-
+                    <Tab eventKey="response" title="Response" id={`response-tab-${testName}`}>
                         <br />
-                        <Tabs defaultActiveKey="status" id="response-tabs">
-
-                            <Tab eventKey="status" title="Status">
+                        <Tabs defaultActiveKey="status" id={`response-tabs-${testName}`}>
+                            <Tab eventKey="status" title="Status" id={`status-tab-${testName}`}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Status</Form.Label>
                                     <Form.Control
+                                        id={`response-status-${testName}`}
                                         as="select"
                                         value={responseStatus}
                                         onChange={(e) => setResponseStatus(Number(e.target.value))}
@@ -181,14 +165,12 @@ function ApiRequestResponseForm({data, onHide}) {
                                     </Form.Control>
                                 </Form.Group>
                             </Tab>
-
-
-                            <Tab eventKey="headers" title="Headers">
+                            <Tab eventKey="headers" title="Headers" id={`response-headers-tab-${testName}`}>
                                 <Form.Label>Headers</Form.Label>
-                                <CommonHeadersSelect headers={responseHeaders} setHeaders={setResponseHeaders}/>
-                                <NameValuePairInputForm headers={responseHeaders} setHeaders={setResponseHeaders}/>
+                                <CommonHeadersSelect headers={responseHeaders} setHeaders={setResponseHeaders} />
+                                <NameValuePairInputForm headers={responseHeaders} setHeaders={setResponseHeaders} />
                             </Tab>
-                            <Tab eventKey="body" title="Body">
+                            <Tab eventKey="body" title="Body" id={`response-body-tab-${testName}`}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Body</Form.Label>
                                     <JsonTextAreaFormatter
@@ -201,14 +183,12 @@ function ApiRequestResponseForm({data, onHide}) {
                     </Tab>
                 </Tabs>
 
-                <Button variant="primary" type="submit" className="mt-2">
+                <Button id={`submit-button-${testName}`} variant="primary" type="submit" className="mt-2">
                     Save and update
                 </Button>
             </Form>
         </div>
     );
-
 }
 
 export default ApiRequestResponseForm;
-

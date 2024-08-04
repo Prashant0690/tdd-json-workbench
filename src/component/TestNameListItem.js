@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import {ListGroup, Modal, Button, Row, Col, Container} from "react-bootstrap";
+import { ListGroup, Modal, Button, Row, Col, Container } from "react-bootstrap";
 import ApiDataContext from "../ApiDataContext";
 import { getReasonPhrase } from 'http-status-codes';
 
@@ -81,82 +81,96 @@ function TestNameListItem({ test, onTestClick, isSelected }) {
                             action
                             onClick={onTestClick}
                             className={`flex-grow-1 p-3 ${isSelected ? "bg-light" : ""}`}
+                            id={`test-item-${apiName}-${endPointName}-${testName}`}
                         >
                             <Row className="text-nowrap text-truncate">
                                 <Col lg={2}>
-                                    <b><span className={methodColor}>{httpMethod || 'N/A'}</span></b>
+                                    <b><span className={methodColor} id={`http-method-${apiName}-${endPointName}-${testName}`}>{httpMethod || 'N/A'}</span></b>
                                 </Col>
                                 <Col lg={7}>
-                                    <strong><span className="text-truncate">{testName}</span></strong>
+                                    <strong><span className="text-truncate" id={`test-name-${apiName}-${endPointName}-${testName}`}>{testName}</span></strong>
                                 </Col>
                                 <Col lg={1}>
-                                    <b><span className={statusColor}>{statusCode}</span></b>
+                                    <b><span className={statusColor} id={`status-code-${apiName}-${endPointName}-${testName}`}>{statusCode}</span></b>
                                 </Col>
                                 <Col lg={2}>
-                                    <small className={statusColor}>{getReasonPhrase(Number(statusCode))}</small>
+                                    <small className={statusColor} id={`status-reason-${apiName}-${endPointName}-${testName}`}>{getReasonPhrase(Number(statusCode))}</small>
                                 </Col>
                             </Row>
                         </ListGroup.Item>
                     </Col>
                     <Col lg={2} className="d-flex mt-lg-0 mt-2 justify-content-between">
-                        <Button variant="outline-secondary" onClick={handleEditClick} title="Edit">
+                        <Button
+                            id={`edit-test-${apiName}-${endPointName}-${testName}`}
+                            variant="outline-secondary"
+                            onClick={handleEditClick}
+                            title="Edit"
+                        >
                             <i className="fas fa-edit"></i>
                         </Button>
-                        <Button variant="outline-danger" onClick={handleDeleteClick} title="Delete">
+                        <Button
+                            id={`delete-test-${apiName}-${endPointName}-${testName}`}
+                            variant="outline-danger"
+                            onClick={handleDeleteClick}
+                            title="Delete"
+                        >
                             <i className="fas fa-trash"></i>
                         </Button>
-                        <Button variant="outline-secondary" onClick={copyTestCase} title="Clone">
+                        <Button
+                            id={`clone-test-${apiName}-${endPointName}-${testName}`}
+                            variant="outline-secondary"
+                            onClick={copyTestCase}
+                            title="Clone"
+                        >
                             <i className="fas fa-copy"></i>
                         </Button>
                     </Col>
                 </Row>
             </Container>
 
-
-
-
             {/* Update Test Name Modal */}
-            <Modal show={showModal} onHide={handleCloseModal}>
-                {/* Modal Header */}
+            <Modal show={showModal} onHide={handleCloseModal} id={`update-test-name-modal-${apiName}-${endPointName}-${testName}`}>
                 <Modal.Header closeButton>
                     <Modal.Title>Update Test Name</Modal.Title>
                 </Modal.Header>
-                {/* Modal Body */}
                 <Modal.Body>
                     <form>
                         <div className="mb-3">
-                            <label htmlFor="currentTestName" className="form-label">
+                            <label htmlFor={`currentTestName-${apiName}-${endPointName}-${testName}`} className="form-label">
                                 Current Test Name
                             </label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="currentTestName"
+                                id={`currentTestName-${apiName}-${endPointName}-${testName}`}
                                 value={testName}
                                 readOnly
                                 disabled
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="newTestName" className="form-label">
+                            <label htmlFor={`newTestName-${apiName}-${endPointName}-${testName}`} className="form-label">
                                 New Test Name
                             </label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="newTestName"
+                                id={`newTestName-${apiName}-${endPointName}-${testName}`}
                                 value={newTestName}
                                 onChange={handleInputChange}
                             />
                         </div>
                     </form>
                 </Modal.Body>
-                {/* Modal Footer */}
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
+                    <Button variant="secondary" onClick={handleCloseModal} id={`close-update-test-name-modal-${apiName}-${endPointName}-${testName}`}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
+                    <Button
+                        id={`submit-test-name-update-${apiName}-${endPointName}-${testName}`}
+                        variant="primary"
+                        onClick={handleSubmit}
+                    >
                         Update
                     </Button>
                 </Modal.Footer>
