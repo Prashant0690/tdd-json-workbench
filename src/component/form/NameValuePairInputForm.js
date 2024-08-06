@@ -1,7 +1,7 @@
-import React, {useRef, useState} from "react";
-import {Button, Col, Form, Row} from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
-const NameValuePairInputForm = ({ headers, setHeaders }) => {
+const NameValuePairInputForm = ({ headers, setHeaders, idPrefix }) => {
     const keyRef = useRef(null);
     const valueRef = useRef(null);
     const addKeyRef = useRef(null);
@@ -53,13 +53,13 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
         }
     };
 
-
     return (
         <>
             {Object.entries(headers).map(([key, value], index) => (
                 <Row key={`${key}-${index}`} className="mb-2">
                     <Col>
                         <Form.Control
+                            id={`${idPrefix}-key-${key}`}
                             placeholder="Key"
                             defaultValue={key}
                             readOnly={editingIndex !== index}
@@ -68,6 +68,7 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
                     </Col>
                     <Col>
                         <Form.Control
+                            id={`${idPrefix}-value-${value}`}
                             placeholder="Value"
                             defaultValue={value}
                             readOnly={editingIndex !== index}
@@ -79,6 +80,7 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
                             <>
                                 <Button
                                     variant="success"
+                                    id={`${idPrefix}-update-button-${key}`}
                                     onClick={() => handleUpdateHeader(key)}
                                     className="me-2"
                                 >
@@ -86,6 +88,7 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
                                 </Button>
                                 <Button
                                     variant="secondary"
+                                    id={`${idPrefix}-cancel-button-${key}`}
                                     onClick={() => setEditingIndex(null)}
                                 >
                                     <i className="fas fa-times"></i> Cancel
@@ -97,6 +100,7 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
                                     <>
                                         <Button
                                             variant="warning"
+                                            id={`${idPrefix}-edit-button-${key}`}
                                             onClick={() => handleEditHeader(index)}
                                             className="me-2"
                                         >
@@ -104,6 +108,7 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
                                         </Button>
                                         <Button
                                             variant="danger"
+                                            id={`${idPrefix}-remove-button-${key}`}
                                             onClick={() => handleHeaderRemove(key)}
                                         >
                                             <i className="fas fa-trash"></i>
@@ -117,20 +122,19 @@ const NameValuePairInputForm = ({ headers, setHeaders }) => {
             ))}
             <Row className="mb-2">
                 <Col>
-                    <Form.Control ref={addKeyRef} placeholder="Key" />
+                    <Form.Control id={`${idPrefix}-add-key`} ref={addKeyRef} placeholder="Key" />
                 </Col>
                 <Col>
-                    <Form.Control ref={addValueRef} placeholder="Value" />
+                    <Form.Control id={`${idPrefix}-add-value`} ref={addValueRef} placeholder="Value" />
                 </Col>
                 <Col xs="auto">
                     {editingIndex === null && (
-                        <Button onClick={handleAddHeader}>
+                        <Button id={`${idPrefix}-add-button`} onClick={handleAddHeader}>
                             <i className="fas fa-plus"></i> Add Value
                         </Button>
                     )}
                 </Col>
             </Row>
-
         </>
     );
 };

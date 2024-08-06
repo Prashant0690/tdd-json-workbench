@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-function JsonTextAreaFormatter({ value, onChangeValue }) {
+function JsonTextAreaFormatter({ value, onChangeValue, idPrefix }) {
     const [internalValue, setInternalValue] = useState(JSON.stringify(value, null, 2));
     const target = useRef(null);
+
     // when value prop changes, update the internalValue
     useEffect(() => {
         setInternalValue(JSON.stringify(value, null, 2));
     }, [value]);
-
 
     const handleInputChange = (event) => {
         setInternalValue(event.target.value);
@@ -32,13 +32,22 @@ function JsonTextAreaFormatter({ value, onChangeValue }) {
     return (
         <div>
             <Form.Control
+                id={`${idPrefix}-json-textarea`}
                 as="textarea"
                 rows={9}
                 value={internalValue}
                 onChange={handleInputChange}
             />
 
-            <Button variant="secondary" onClick={handleFormatClick} className="mt-2" ref={target}>Format / Validate</Button>
+            <Button
+                id={`${idPrefix}-format-validate-button`}
+                variant="secondary"
+                onClick={handleFormatClick}
+                className="mt-2"
+                ref={target}
+            >
+                Format / Validate
+            </Button>
 
             <div className="alert alert-info d-flex align-items-center" role="alert">
                 <i className="fas fa-info-circle me-2"></i>

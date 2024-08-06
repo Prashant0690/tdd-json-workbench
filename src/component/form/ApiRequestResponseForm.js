@@ -123,15 +123,15 @@ function ApiRequestResponseForm({ data, onHide }) {
                             <Tab eventKey="headers" title="Headers" id={`request-headers-tab-${testName}`}>
                                 <Form.Label>Headers</Form.Label>
                                 <CommonHeadersSelect headers={requestHeaders} setHeaders={setRequestHeaders} />
-                                <NameValuePairInputForm headers={requestHeaders} setHeaders={setRequestHeaders} />
+                                <NameValuePairInputForm headers={requestHeaders} setHeaders={setRequestHeaders} idPrefix="header" />
                             </Tab>
                             <Tab eventKey="queryParams" title="Query Parameters" id={`query-params-tab-${testName}`}>
                                 <Form.Label>Query Parameters</Form.Label>
-                                <NameValuePairInputForm headers={requestQueryParams} setHeaders={setRequestQueryParams} />
+                                <NameValuePairInputForm headers={requestQueryParams} setHeaders={setRequestQueryParams} idPrefix="queryParam" />
                             </Tab>
                             <Tab eventKey="pathParams" title="Path Parameters" id={`path-params-tab-${testName}`}>
                                 <Form.Label>Path Parameters</Form.Label>
-                                <NameValuePairInputForm headers={requestPathParams} setHeaders={setRequestPathParams} />
+                                <NameValuePairInputForm headers={requestPathParams} setHeaders={setRequestPathParams} idPrefix="pathParam" />
                             </Tab>
                             <Tab eventKey="body" title="Body" id={`request-body-tab-${testName}`}>
                                 <Form.Group className="mb-3">
@@ -139,6 +139,7 @@ function ApiRequestResponseForm({ data, onHide }) {
                                     <JsonTextAreaFormatter
                                         value={requestBody}
                                         onChangeValue={setRequestBody}
+                                        idPrefix="request-body"
                                     />
                                 </Form.Group>
                             </Tab>
@@ -168,7 +169,7 @@ function ApiRequestResponseForm({ data, onHide }) {
                             <Tab eventKey="headers" title="Headers" id={`response-headers-tab-${testName}`}>
                                 <Form.Label>Headers</Form.Label>
                                 <CommonHeadersSelect headers={responseHeaders} setHeaders={setResponseHeaders} />
-                                <NameValuePairInputForm headers={responseHeaders} setHeaders={setResponseHeaders} />
+                                <NameValuePairInputForm headers={responseHeaders} setHeaders={setResponseHeaders} idPrefix="responseHeader" />
                             </Tab>
                             <Tab eventKey="body" title="Body" id={`response-body-tab-${testName}`}>
                                 <Form.Group className="mb-3">
@@ -176,6 +177,7 @@ function ApiRequestResponseForm({ data, onHide }) {
                                     <JsonTextAreaFormatter
                                         value={responseBody}
                                         onChangeValue={setResponseBody}
+                                        idPrefix="response-body"
                                     />
                                 </Form.Group>
                             </Tab>
