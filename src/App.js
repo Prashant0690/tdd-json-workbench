@@ -6,8 +6,8 @@ import ApiListItem from './component/ApiListItem';
 import AddApiForm from "./component/AddApiForm";
 import {importFromJsonFile} from './utils/fileHelpers';
 import AppHeader from "./component/AppHeader";
+import AppFooter from "./component/AppFooter"
 import ReactJsonPretty from 'react-json-pretty';
-//import 'react-json-pretty/themes/monikai.css';
 import './myCustomTheme.css';
 import ConstantCodeGenerator from "./component/ConstantCodeGenerator";
 
@@ -101,7 +101,10 @@ function App() {
                                         <ReactJsonPretty id="json-pretty" data={apiDataState} />
                                     </Modal.Body>
                                     <Modal.Footer>
-                                        <Button variant="secondary" onClick={() => setShowPreview(false)}>
+                                        <Button
+                                            id="close-json-preview-button"
+                                            variant="secondary"
+                                            onClick={() => setShowPreview(false)}>
                                             Close
                                         </Button>
                                     </Modal.Footer>
@@ -120,6 +123,8 @@ function App() {
                     </Col>
                 </Row>
             </Container>
+
+            <AppFooter /> {/* Include the AppFooter component */}
         </div>
     );
 }
