@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Col, Container, Form, Row, Tab, Tabs } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Tab, Tabs, Alert } from 'react-bootstrap';
 import NameValuePairInputForm from "./NameValuePairInputForm";
 import { cloneDeep, isEmpty, omitBy } from 'lodash';
 import JsonTextAreaFormatter from "./JsonTextAreaFormatter";
@@ -9,9 +9,11 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import CommonHeadersSelect from "./CommonHeadersSelect";
 
 function ApiRequestResponseForm({ data, onHide }) {
+    const [activeTab, setActiveTab] = useState('request'); // State to track the active tab
+
     const { updateTest } = useContext(ApiDataContext);
     const { apiName, endPointName, testName, url, ...restOfData } = data;
-    const [apiData, ] = useState(cloneDeep(restOfData));
+    const [apiData] = useState(cloneDeep(restOfData));
     const [requestMethod, setRequestMethod] = useState(apiData?.request?.method || 'GET');
     const [requestPath, setRequestPath] = useState(apiData?.request?.path || '');
     const [requestHeaders, setRequestHeaders] = useState(apiData?.request?.headers || {});
@@ -80,10 +82,21 @@ function ApiRequestResponseForm({ data, onHide }) {
         return false;
     }
 
+    // Define help text based on the active tab
+    const helpText = {
+        request: "This section allows you to configure the API request details, including path, method, headers, and body.",
+        response: "This section allows you to configure the API response details, including status, headers, and body."
+    };
+
     return (
         <div className="p-3">
+            <Alert variant="info" className="py-2 px-3 small">{helpText[activeTab]}</Alert> {/* Display the help text */}
             <Form onSubmit={handleSubmit}>
-                <Tabs defaultActiveKey="request" id={`request-response-tabs-${testName}`}>
+                <Tabs
+                    defaultActiveKey="request"
+                    id={`request-response-tabs-${testName}`}
+                    onSelect={(tab) => setActiveTab(tab)} // Update active tab
+                >
                     <Tab eventKey="request" title="Request" id={`request-tab-${testName}`}>
                         <br />
                         <Tabs defaultActiveKey="url_method" id={`request-tabs-${testName}`}>
