@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import './App.css';
-import { Button, Col, Container, Form, InputGroup, Row, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Col, Container, Form, InputGroup, Row, Modal, OverlayTrigger, Tooltip, Alert } from 'react-bootstrap';
 import ApiDataContext from './ApiDataContext';
 import ApiListItem from './component/ApiListItem';
 import AddApiForm from "./component/AddApiForm";
@@ -16,15 +16,13 @@ function App() {
     const [exportFileName, setExportFileName] = useState('data');
     const [showPreview, setShowPreview] = useState(false);
 
-
     useEffect(() => {
-            // Apply the current theme class to the body
+        // Apply the current theme class to the body
         document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
     }, [theme]);
 
-
     const toggleTheme = () => {
-            setTheme(theme === 'light' ? 'dark' : 'light');
+        setTheme(theme === 'light' ? 'dark' : 'light');
     };
 
     const handleImport = async (event) => {
@@ -52,6 +50,11 @@ function App() {
             <Container>
                 <Row className="justify-content-md-center">
                     <Col>
+                        {/* No Validation Warning Alert */}
+                        <Alert variant="warning" className="py-2 px-3 small">
+                            <strong>Warning:</strong> The app does not include built-in validation, so users need to handle this aspect with care. It’s important to ensure that the JSON structure is accurate and well-formed before using it in testing or automation.
+                        </Alert>
+
                         <Row>
                             <Col sm={6}>
                                 {/* Import JSON File Button */}
