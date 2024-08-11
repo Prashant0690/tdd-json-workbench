@@ -1,8 +1,10 @@
 import React from 'react';
 
+import "./AppFooter.css";
+
 function AppFooter() {
     return (
-        <footer className="bg-light text-center text-lg-start border-top mt-auto py-3">
+        <footer className="app-footer">
             <div className="container p-4">
                 <div className="row">
                     <div className="col-lg-12 col-md-12 mb-4 mb-md-0">

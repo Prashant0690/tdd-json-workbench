@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ListGroup, Modal, Button, Row, Col, Container } from "react-bootstrap";
+import { ListGroup, Modal, Button, Row, Col, Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ApiDataContext from "../ApiDataContext";
 import { getReasonPhrase } from 'http-status-codes';
 
@@ -77,53 +77,93 @@ function TestNameListItem({ test, onTestClick, isSelected }) {
             <Container className="mb-2">
                 <Row className="d-flex align-items-center">
                     <Col lg={9}>
-                        <ListGroup.Item
-                            action
-                            onClick={onTestClick}
-                            className={`flex-grow-1 p-3 ${isSelected ? "bg-light" : ""}`}
-                            id={`test-item-${apiName}-${endPointName}-${testName}`}
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id={`tooltip-test-item-${apiName}-${endPointName}-${testName}`}>Click to view the test details.</Tooltip>}
                         >
-                            <Row className="text-nowrap text-truncate">
-                                <Col lg={2}>
-                                    <b><span className={methodColor} id={`http-method-${apiName}-${endPointName}-${testName}`}>{httpMethod || 'N/A'}</span></b>
-                                </Col>
-                                <Col lg={7}>
-                                    <strong><span className="text-truncate" id={`test-name-${apiName}-${endPointName}-${testName}`}>{testName}</span></strong>
-                                </Col>
-                                <Col lg={1}>
-                                    <b><span className={statusColor} id={`status-code-${apiName}-${endPointName}-${testName}`}>{statusCode}</span></b>
-                                </Col>
-                                <Col lg={2}>
-                                    <small className={statusColor} id={`status-reason-${apiName}-${endPointName}-${testName}`}>{getReasonPhrase(Number(statusCode))}</small>
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
+                            <ListGroup.Item
+                                action
+                                onClick={onTestClick}
+                                className={`${isSelected ? "test-item-selected" : ""}`}
+                                id={`test-item-${apiName}-${endPointName}-${testName}`}
+                            >
+                                <Row className="text-nowrap text-truncate">
+                                    <Col lg={2}>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip id={`tooltip-http-method-${apiName}-${endPointName}-${testName}`}>HTTP Method used in the test.</Tooltip>}
+                                        >
+                                            <b><span className={methodColor} id={`http-method-${apiName}-${endPointName}-${testName}`}>{httpMethod || 'N/A'}</span></b>
+                                        </OverlayTrigger>
+                                    </Col>
+                                    <Col lg={7}>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip id={`tooltip-test-name-${apiName}-${endPointName}-${testName}`}>Test Name</Tooltip>}
+                                        >
+                                            <strong><span className="text-truncate" id={`test-name-${apiName}-${endPointName}-${testName}`}>{testName}</span></strong>
+                                        </OverlayTrigger>
+                                    </Col>
+                                    <Col lg={1}>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip id={`tooltip-status-code-${apiName}-${endPointName}-${testName}`}>Response Status Code</Tooltip>}
+                                        >
+                                            <b><span className={statusColor} id={`status-code-${apiName}-${endPointName}-${testName}`}>{statusCode}</span></b>
+                                        </OverlayTrigger>
+                                    </Col>
+                                    <Col lg={2}>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip id={`tooltip-status-reason-${apiName}-${endPointName}-${testName}`}>Status Reason Phrase</Tooltip>}
+                                        >
+                                            <small className={statusColor} id={`status-reason-${apiName}-${endPointName}-${testName}`}>{getReasonPhrase(Number(statusCode))}</small>
+                                        </OverlayTrigger>
+                                    </Col>
+                                </Row>
+                            </ListGroup.Item>
+                        </OverlayTrigger>
                     </Col>
                     <Col lg={2} className="d-flex mt-lg-0 mt-2 justify-content-between">
-                        <Button
-                            id={`edit-test-${apiName}-${endPointName}-${testName}`}
-                            variant="outline-secondary"
-                            onClick={handleEditClick}
-                            title="Edit"
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id={`tooltip-edit-test-${apiName}-${endPointName}-${testName}`}>Edit the name of this test.</Tooltip>}
                         >
-                            <i className="fas fa-edit"></i>
-                        </Button>
-                        <Button
-                            id={`delete-test-${apiName}-${endPointName}-${testName}`}
-                            variant="outline-danger"
-                            onClick={handleDeleteClick}
-                            title="Delete"
+                            <Button
+                                id={`edit-test-${apiName}-${endPointName}-${testName}`}
+                                variant="outline-secondary"
+                                onClick={handleEditClick}
+                                title="Edit"
+                            >
+                                <i className="fas fa-edit"></i>
+                            </Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id={`tooltip-delete-test-${apiName}-${endPointName}-${testName}`}>Delete this test.</Tooltip>}
                         >
-                            <i className="fas fa-trash"></i>
-                        </Button>
-                        <Button
-                            id={`clone-test-${apiName}-${endPointName}-${testName}`}
-                            variant="outline-secondary"
-                            onClick={copyTestCase}
-                            title="Clone"
+                            <Button
+                                id={`delete-test-${apiName}-${endPointName}-${testName}`}
+                                variant="outline-danger"
+                                onClick={handleDeleteClick}
+                                title="Delete"
+                            >
+                                <i className="fas fa-trash"></i>
+                            </Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id={`tooltip-clone-test-${apiName}-${endPointName}-${testName}`}>Clone this test, creating a copy with "-copy" in the name.</Tooltip>}
                         >
-                            <i className="fas fa-copy"></i>
-                        </Button>
+                            <Button
+                                id={`clone-test-${apiName}-${endPointName}-${testName}`}
+                                variant="outline-secondary"
+                                onClick={copyTestCase}
+                                title="Clone"
+                            >
+                                <i className="fas fa-copy"></i>
+                            </Button>
+                        </OverlayTrigger>
                     </Col>
                 </Row>
             </Container>
@@ -163,16 +203,26 @@ function TestNameListItem({ test, onTestClick, isSelected }) {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal} id={`close-update-test-name-modal-${apiName}-${endPointName}-${testName}`}>
-                        Close
-                    </Button>
-                    <Button
-                        id={`submit-test-name-update-${apiName}-${endPointName}-${testName}`}
-                        variant="primary"
-                        onClick={handleSubmit}
+                    <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id={`tooltip-close-update-test-name-modal-${apiName}-${endPointName}-${testName}`}>Close this dialog without saving changes.</Tooltip>}
                     >
-                        Update
-                    </Button>
+                        <Button variant="secondary" onClick={handleCloseModal} id={`close-update-test-name-modal-${apiName}-${endPointName}-${testName}`}>
+                            Close
+                        </Button>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id={`tooltip-submit-test-name-update-${apiName}-${endPointName}-${testName}`}>Save the new test name.</Tooltip>}
+                    >
+                        <Button
+                            id={`submit-test-name-update-${apiName}-${endPointName}-${testName}`}
+                            variant="primary"
+                            onClick={handleSubmit}
+                        >
+                            Update
+                        </Button>
+                    </OverlayTrigger>
                 </Modal.Footer>
             </Modal>
         </>
