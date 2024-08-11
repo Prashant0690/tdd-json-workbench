@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ApiDataContext from '../ApiDataContext';
 import { DEFAULT_ENDPOINT } from "../constant/constants";
 
@@ -24,9 +24,14 @@ const AddApiForm = () => {
     return (
         <>
             <div className="my-4">
-                <Button id="add-new-api-button" variant="link" onClick={() => setShowForm(true)}>
-                    Add New API
-                </Button>
+                <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip id="tooltip-add-api-button">Click to add a new API.</Tooltip>}
+                >
+                    <Button id="add-new-api-button" variant="link" onClick={() => setShowForm(true)}>
+                        Add New API
+                    </Button>
+                </OverlayTrigger>
             </div>
 
             <Modal show={showForm} onHide={() => setShowForm(false)} id="add-api-modal">
@@ -36,7 +41,12 @@ const AddApiForm = () => {
                 <Modal.Body>
                     <Form className='row' onSubmit={handleSubmit} id="add-api-form">
                         <div className='col-12'>
-                            <Form.Label htmlFor="api-name-input">API Name:</Form.Label>
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip id="tooltip-api-name-input">Enter the name for the new API.</Tooltip>}
+                            >
+                                <Form.Label htmlFor="api-name-input">API Name:</Form.Label>
+                            </OverlayTrigger>
                             <Form.Control
                                 type="text"
                                 id="api-name-input"
@@ -47,7 +57,12 @@ const AddApiForm = () => {
                             />
                         </div>
                         <div className='col-12'>
-                            <Form.Label htmlFor="url-input">URL:</Form.Label>
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip id="tooltip-url-input">Enter the base URL for the API.</Tooltip>}
+                            >
+                                <Form.Label htmlFor="url-input">URL:</Form.Label>
+                            </OverlayTrigger>
                             <Form.Control
                                 type="text"
                                 id="url-input"
@@ -58,7 +73,12 @@ const AddApiForm = () => {
                             />
                         </div>
                         <div className='col-12'>
-                            <Form.Label htmlFor="endpoint-name-input">Endpoint Name:</Form.Label>
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip id="tooltip-endpoint-name-input">Enter the name for the API endpoint. The default value is provided.</Tooltip>}
+                            >
+                                <Form.Label htmlFor="endpoint-name-input">Endpoint Name:</Form.Label>
+                            </OverlayTrigger>
                             <Form.Control
                                 type="text"
                                 id="endpoint-name-input"
@@ -71,12 +91,22 @@ const AddApiForm = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowForm(false)} id="close-add-api-modal-button">
-                        Close
-                    </Button>
-                    <Button variant="primary" type="submit" onClick={handleSubmit} id="submit-add-api-button">
-                        Add API
-                    </Button>
+                    <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-close-add-api-modal-button">Click to close without adding the API.</Tooltip>}
+                    >
+                        <Button variant="secondary" onClick={() => setShowForm(false)} id="close-add-api-modal-button">
+                            Close
+                        </Button>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-submit-add-api-button">Click to add the new API.</Tooltip>}
+                    >
+                        <Button variant="primary" type="submit" onClick={handleSubmit} id="submit-add-api-button">
+                            Add API
+                        </Button>
+                    </OverlayTrigger>
                 </Modal.Footer>
             </Modal>
         </>

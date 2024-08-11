@@ -87,7 +87,7 @@ function ApiRequestResponseForm({ data, onHide }) {
                     <Tab eventKey="request" title="Request" id={`request-tab-${testName}`}>
                         <br />
                         <Tabs defaultActiveKey="url_method" id={`request-tabs-${testName}`}>
-                            <Tab eventKey="url_method" title="URL & Method" id={`url-method-tab-${testName}`}>
+                            <Tab eventKey="url_method" title="Request Method & URI" id={`url-method-tab-${testName}`}>
                                 <Container fluid>
                                     <Row>
                                         <Col md={2}>

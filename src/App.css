@@ -1,4 +1,117 @@
-.card-header-custom {
-    background-color: var(--card-header-bg);
-    color: var(--card-header-text);
+body.light-theme {
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+
+    .nav-tabs .nav-link.active {
+        background-color: #e0e0e0; /* Light Gray for better contrast */
+        color: #333333; /* Darker Gray */
+        font-weight: bold;
+        border-bottom: 2px solid #c86b85; /* Accent underline for active tab */
+    }
+
+    .nav-tabs .nav-link {
+        background-color: #ffffff; /* White */
+        color: #555555; /* Medium Gray */
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: #e6e6e6; /* Slightly darker gray on hover */
+        color: #333333; /* Darker Gray */
+    }
+
+    .modal-header {
+        background-color: #f0f0f0; /* Light Gray */
+        color: #333333; /* Dark Gray */
+        border-bottom: 2px solid #c86b85; /* Accent underline */
+    }
+
+    .card {
+        background-color: #ffffff; /* White */
+        border-color: #e0e0e0; /* Light Gray */
+    }
+
+    .card-header {
+        background-color: #f7f7f7; /* Very Light Gray */
+        color: #333333; /* Dark Gray */
+    }
+
+    .test-item-selected {
+        background-color: #c86b85; /* Accent color for selected state */
+    }
+}
+
+body.dark-theme {
+    background-color: #1e1e1e !important;
+    color: #f5f5f5 !important;
+
+    .modal-content {
+        background-color: #2C2C2C; /* Dark Charcoal */
+    }
+
+    .modal-header {
+        background-color: #1A1A1A; /* Black */
+        color: #FFFFFF; /* White text */
+        border-bottom: 2px solid #ff6347; /* Accent underline in a warmer color */
+    }
+
+    .nav-tabs .nav-link.active {
+        background-color: #383838; /* Darker Gray */
+        color: #FFFFFF; /* White */
+        font-weight: bold;
+        border-bottom: 2px solid #ff6347; /* Accent underline for active tab */
+    }
+
+    .nav-tabs .nav-link {
+        background-color: #2a2a2a; /* Slightly lighter dark gray */
+        color: #BBBBBB; /* Light Gray */
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: #444444; /* Mid Gray */
+        color: #FFFFFF; /* White */
+    }
+
+    .card {
+        background-color: #2C2C2C; /* Dark Charcoal */
+        border-color: #4A4A4A; /* Slate Grey */
+    }
+
+    .card-header {
+        background-color: #1A1A1A; /* Black */
+        color: #FFFFFF; /* White text */
+    }
+
+    .list-group-item {
+        background-color: #333333; /* Dark Grey */
+        color: #FFFFFF; /* White */
+    }
+
+    .btn-primary {
+        background-color: #4A4A4A; /* Slate Grey */
+        border-color: #4A4A4A; /* Slate Grey */
+        color: #FFFFFF; /* White text */
+    }
+
+    .btn-primary:hover {
+        background-color: #666666; /* Lighter Grey */
+        border-color: #666666; /* Lighter Grey */
+        color: #FFFFFF; /* White text */
+    }
+
+    .btn-secondary {
+        background-color: #555555; /* Mid Grey */
+        border-color: #555555; /* Mid Grey */
+        color: #FFFFFF; /* White */
+    }
+
+    .btn-secondary:hover {
+        background-color: #777777; /* Light Grey */
+        border-color: #777777; /* Light Grey */
+        color: #FFFFFF; /* White */
+    }
+
+    /* Selected state */
+    .test-item-selected {
+        background-color: #c86b85; /* Accent color for selected state */
+    }
 }

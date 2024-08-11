@@ -1,31 +1,30 @@
-import {useContext, useState} from 'react';
+import { useContext, useState, useEffect } from 'react';
 import './App.css';
-import {Button, Col, Container, Form, InputGroup, Row, Modal} from 'react-bootstrap';
+import { Button, Col, Container, Form, InputGroup, Row, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ApiDataContext from './ApiDataContext';
 import ApiListItem from './component/ApiListItem';
 import AddApiForm from "./component/AddApiForm";
-import {importFromJsonFile} from './utils/fileHelpers';
+import { importFromJsonFile } from './utils/fileHelpers';
 import AppHeader from "./component/AppHeader";
-import AppFooter from "./component/AppFooter"
+import AppFooter from "./component/AppFooter";
 import ReactJsonPretty from 'react-json-pretty';
-import './myCustomTheme.css';
 import ConstantCodeGenerator from "./component/ConstantCodeGenerator";
 
 function App() {
-    const {apiDataState, getAllApiNames, setApiDataState, exportData} = useContext(ApiDataContext);
-    const [theme, setTheme] = useState('light'); // Default theme
+    const { apiDataState, getAllApiNames, setApiDataState, exportData } = useContext(ApiDataContext);
+    const [theme, setTheme] = useState('light'); // Default theme is light
     const [exportFileName, setExportFileName] = useState('data');
     const [showPreview, setShowPreview] = useState(false);
 
-    // Function to toggle between dark and light themes
+
+    useEffect(() => {
+            // Apply the current theme class to the body
+        document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
+    }, [theme]);
+
+
     const toggleTheme = () => {
-        if (theme === 'light') {
-            setTheme('dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            setTheme('light');
-            document.documentElement.setAttribute('data-theme', 'light');
-        }
+            setTheme(theme === 'light' ? 'dark' : 'light');
     };
 
     const handleImport = async (event) => {
@@ -46,53 +45,77 @@ function App() {
     };
 
     return (
-        <div className={theme === 'light' ? 'bg-light text-dark' : 'bg-dark text-light'}>
-            <AppHeader theme={theme} onToggleTheme={toggleTheme}/>
+        <div>
+            {/* App Header with theme toggle */}
+            <AppHeader theme={theme} onToggleTheme={toggleTheme} />
 
             <Container>
                 <Row className="justify-content-md-center">
                     <Col>
                         <Row>
                             <Col sm={6}>
-                                <Form.Group controlId="formFile" className="d-flex">
-                                    <Form.Control
-                                        id="import-json-file"
-                                        type="file"
-                                        accept=".json"
-                                        onChange={handleImport}
-                                        className="me-3"
-                                    />
-                                </Form.Group>
+                                {/* Import JSON File Button */}
+                                <OverlayTrigger
+                                    placement="top"
+                                    overlay={<Tooltip id="tooltip-import">Import a previously exported JSON file.</Tooltip>}
+                                >
+                                    <Form.Group controlId="formFile" className="d-flex">
+                                        <Form.Control
+                                            id="import-json-file"
+                                            type="file"
+                                            accept=".json"
+                                            onChange={handleImport}
+                                            className="me-3"
+                                        />
+                                    </Form.Group>
+                                </OverlayTrigger>
                             </Col>
                             <Col sm={6}>
+                                {/* Export Data Button with filename input */}
                                 <InputGroup className="mb-3">
-                                    <Form.Control
-                                        id="export-file-name"
-                                        type="text"
-                                        value={exportFileName}
-                                        onChange={handleExportFileNameChange}
-                                        placeholder="Enter filename"
-                                    />
-                                    <Button
-                                        id="export-data-button"
-                                        variant={theme === 'light' ? 'outline-secondary' : 'outline-light'}
-                                        onClick={() => exportData(exportFileName + '.json')}
+                                    <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip id="tooltip-export">Enter the filename for exporting the JSON data.</Tooltip>}
                                     >
-                                        Export Data
-                                    </Button>
+                                        <Form.Control
+                                            id="export-file-name"
+                                            type="text"
+                                            value={exportFileName}
+                                            onChange={handleExportFileNameChange}
+                                            placeholder="Enter filename"
+                                        />
+                                    </OverlayTrigger>
+                                    <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip id="tooltip-export-button">Export the current API data as a JSON file.</Tooltip>}
+                                    >
+                                        <Button
+                                            id="export-data-button"
+                                            onClick={() => exportData(exportFileName + '.json')}
+                                        >
+                                            Export Data
+                                        </Button>
+                                    </OverlayTrigger>
                                 </InputGroup>
                             </Col>
                         </Row>
 
                         <Row>
                             <Col sm={6}>
-                                <Button
-                                    id="show-json-preview-button"
-                                    variant="primary"
-                                    onClick={() => setShowPreview(true)}
+                                {/* Show JSON Preview Button */}
+                                <OverlayTrigger
+                                    placement="top"
+                                    overlay={<Tooltip id="tooltip-preview">Show a preview of the current JSON data.</Tooltip>}
                                 >
-                                    Show JSON Preview
-                                </Button>
+                                    <Button
+                                        id="show-json-preview-button"
+                                        variant="primary"
+                                        onClick={() => setShowPreview(true)}
+                                    >
+                                        Show JSON Preview
+                                    </Button>
+                                </OverlayTrigger>
+                                {/* Modal for JSON Preview */}
                                 <Modal size="lg" show={showPreview} onHide={() => setShowPreview(false)}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>JSON Preview</Modal.Title>
@@ -101,30 +124,55 @@ function App() {
                                         <ReactJsonPretty id="json-pretty" data={apiDataState} />
                                     </Modal.Body>
                                     <Modal.Footer>
-                                        <Button
-                                            id="close-json-preview-button"
-                                            variant="secondary"
-                                            onClick={() => setShowPreview(false)}>
-                                            Close
-                                        </Button>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip id="tooltip-close-preview">Close the JSON preview.</Tooltip>}
+                                        >
+                                            <Button
+                                                id="close-json-preview-button"
+                                                variant="secondary"
+                                                onClick={() => setShowPreview(false)}>
+                                                Close
+                                            </Button>
+                                        </OverlayTrigger>
                                     </Modal.Footer>
                                 </Modal>
                             </Col>
                             <Col sm={6}>
-                                <ConstantCodeGenerator />
+                                {/* Constant Code Generator (further code generation details within component) */}
+                                <OverlayTrigger
+                                    placement="top"
+                                    overlay={<Tooltip id="tooltip-code-generator">Generate code constants from the API data.</Tooltip>}
+                                >
+                                    <ConstantCodeGenerator />
+                                </OverlayTrigger>
                             </Col>
                         </Row>
 
-                        <AddApiForm/>
+                        {/* Form for adding a new API */}
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id="tooltip-add-api">Add a new API by specifying its name and URL.</Tooltip>}
+                        >
+                            <AddApiForm />
+                        </OverlayTrigger>
 
+                        {/* List of APIs (Each API will have edit/delete/add endpoint options) */}
                         {getAllApiNames().map(([apiName, test], index) => (
-                            <ApiListItem key={index} id={`api-${apiName}`} apiName={apiName} url={test.url} />
+                            <OverlayTrigger
+                                key={index}
+                                placement="top"
+                                overlay={<Tooltip id={`tooltip-api-${apiName}`}>Manage the API: {apiName}</Tooltip>}
+                            >
+                                <ApiListItem id={`api-${apiName}`} apiName={apiName} url={test.url} />
+                            </OverlayTrigger>
                         ))}
                     </Col>
                 </Row>
             </Container>
 
-            <AppFooter /> {/* Include the AppFooter component */}
+            {/* App Footer */}
+            <AppFooter />
         </div>
     );
 }

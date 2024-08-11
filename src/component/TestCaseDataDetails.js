@@ -15,14 +15,13 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
   return (
       <Modal size="lg" show={show} onHide={handleClose} centered id={`test-case-modal-${data.testName}`}>
         <Modal.Header closeButton>
-          <Modal.Title id={`test-case-title-${data.testName}`} style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '95%' }}>
+          <Modal.Title id={`test-case-title-${data.testName}`} >
             {data.testName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs defaultActiveKey="fullTest" id={`test-case-tabs-${data.testName}`}>
-            {/* Full Test Object Tab */}
-            <Tab eventKey="fullTest" title="Full Test Object" id={`full-test-tab-${data.testName}`}>
+          <Tabs defaultActiveKey="fullTest" id={`test-case-tabs-${data.testName}`} >
+            <Tab eventKey="fullTest" title="Full Test Object" id={`full-test-tab-${data.testName}`} >
               <Card>
                 <Card.Header>
                   <strong>Full Test Object:</strong>
@@ -34,8 +33,7 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
                 </ListGroup>
               </Card>
             </Tab>
-            {/* Request Tab */}
-            <Tab eventKey="request" title="Request" id={`request-tab-${data.testName}`}>
+            <Tab eventKey="request" title="Request" id={`request-tab-${data.testName}`} className="custom-tab">
               <Card>
                 <Card.Header>
                   <strong>Request:</strong>
@@ -47,8 +45,7 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
                 </ListGroup>
               </Card>
             </Tab>
-            {/* Response Tab */}
-            <Tab eventKey="response" title="Response" id={`response-tab-${data.testName}`}>
+            <Tab eventKey="response" title="Response" id={`response-tab-${data.testName}`} className="custom-tab">
               <Card>
                 <Card.Header>
                   <strong>Response:</strong>
@@ -60,9 +57,8 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
                 </ListGroup>
               </Card>
             </Tab>
-            {/* Request Body (JSON) Tab */}
             {hasRequestBody && (
-                <Tab eventKey="requestBody" title="Request Body (JSON)" id={`request-body-tab-${data.testName}`}>
+                <Tab eventKey="requestBody" title="Request Body (JSON)" id={`request-body-tab-${data.testName}`} className="custom-tab">
                   <Card>
                     <Card.Header>
                       <strong>Request Body:</strong>
@@ -75,9 +71,8 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
                   </Card>
                 </Tab>
             )}
-            {/* Response Body (JSON) Tab */}
             {hasResponseBody && (
-                <Tab eventKey="responseBody" title="Response Body (JSON)" id={`response-body-tab-${data.testName}`}>
+                <Tab eventKey="responseBody" title="Response Body (JSON)" id={`response-body-tab-${data.testName}`} className="custom-tab">
                   <Card>
                     <Card.Header>
                       <strong>Response Body:</strong>
@@ -90,7 +85,7 @@ const TestCaseDataDetails = ({ data, show, handleClose }) => {
                   </Card>
                 </Tab>
             )}
-            <Tab eventKey="apiRequestResponse" title={"Edit Request/Response"} id={`edit-request-response-tab-${data.testName}`}>
+            <Tab eventKey="apiRequestResponse" title={"Edit Request/Response"} id={`edit-request-response-tab-${data.testName}`} className="custom-tab">
               <ApiRequestResponseForm data={data} onHide={handleClose} />
             </Tab>
           </Tabs>

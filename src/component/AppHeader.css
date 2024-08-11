@@ -1,29 +1,54 @@
+/* General header styling */
 .app-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: var(--bs-light);
-    color: var(--bs-dark);
+    margin-bottom: 20px;
 }
 
-.app-header[data-bs-theme='dark'] {
-    background-color: var(--bs-dark);
-    color: var(--bs-light);
+/* Light theme header */
+.light-theme .app-header {
+    background-color: #f8f9fa;
+    color: #343a40;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Dark theme header */
+.dark-theme .app-header {
+    background-color: #343a40;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Additional styles for links in the header */
+.app-header a {
+    color: inherit;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
+
+.light-theme .app-header a:hover {
+    color: #212529; /* Darker hover color in light theme */
+}
+
+.dark-theme .app-header a:hover {
+    color: #e9ecef; /* Lighter hover color in dark theme */
+}
+
+/* Theme toggle button styling */
 .theme-toggle-btn {
     border: none;
     background: none;
     cursor: pointer;
     font-size: 20px;
+    color: pink;
 }
 
-
+/* Logo styling */
 .logo {
     font-size: 2em;
     font-weight: bold;
-    /*text-transform: uppercase;*/
     display: inline-block;
 }
 
