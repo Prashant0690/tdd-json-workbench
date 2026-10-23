@@ -15,12 +15,12 @@ Our project leverages the flexibility of JSON and the power of JavaScript to per
 
 Each scenario is a separate test case and is fully described by a JSON object in the JSON array present in `api_scenarios.json` file. A scenario includes an API name, endpoint name, test name, request details (including method, headers, path parameters, and body), and expected response (including status and body).
 
-Our main script (`api_test.js`) reads these scenarios and uses Axios to send HTTP requests based on the information in each scenario. The received responses are then validated against the expected responses defined in the scenarios using Chai assertions.
+Our main script (`api_tests.js`) reads these scenarios and uses Axios to send HTTP requests based on the information in each scenario. The received responses are then validated against the expected responses defined in the scenarios using Chai assertions.
 
 ## Project Files
 
 - `api_scenarios.json`: The JSON file containing our test scenarios.
-- `api_test.js`: Our main testing script that reads the scenarios and performs the tests.
+- `api_tests.js`: The test runner that reads the scenarios and performs the tests.
 
 ## Code Overview
 
@@ -95,7 +95,7 @@ describe('API tests', function() {
 
 ## Getting Started
 
-You'll need Node.js and NPM installed on your machine. To install the required packages, navigate to the project directory and run:
+You'll need Node.js `^20.19.0` or `>=22.12.0` and npm installed on your machine. To install the required packages, navigate to the project directory and run:
 
 ```
 npm install
