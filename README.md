@@ -8,6 +8,22 @@ This project, TDD-JSON-Workbench, is designed to manage API data in a unique JSO
 * Providing CRUD operations for the JSON data.
 * Allows users to download the data as a JSON file.
 
+## Skills and experience represented by this project
+
+This repository shows practical experience building and testing API-focused developer tools. Its code covers a React interface for creating, editing, previewing, and exporting API scenarios, plus examples of running those scenarios as automated tests in JavaScript and Java. The Selenium module adds browser-based automation for the workbench UI.
+
+The skills needed to work on this project include:
+
+- **Frontend development:** JavaScript, React function components and hooks, context-based shared state, CSS, and React Bootstrap.
+- **API and data modeling:** HTTP methods, request and response fields, JSON parsing/formatting, and keeping scenario data usable across tools.
+- **Automated testing:** Jest and React Testing Library for the React app, Mocha and Chai with Axios for JavaScript API scenarios, JUnit for Java tests, and Selenium WebDriver for UI automation.
+- **Java and build tooling:** Java, Maven, dependency management, and WebDriver setup.
+- **Everyday project workflow:** npm, Git, reading and updating lockfiles, and documenting setup and behavior.
+
+The coding approach visible in the repository is component-based: UI behavior is split across focused React components, shared API data is managed through a context, and request/response scenarios are represented as JSON so they can be edited and reused. Automated examples exercise the same API scenario idea from multiple languages. When extending the project, keep those scenario fields consistent, prefer small changes near the owning component or test runner, and update the relevant README when setup or behavior changes.
+
+These are project-based indicators of experience, not a complete personal résumé. Add employment history, years of experience, or credentials only from details you can verify independently.
+
 
 ## Potential Use Cases
 

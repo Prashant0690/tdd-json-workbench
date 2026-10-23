@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const axios = require('axios');
 const assert = require('chai').assert;
 
-const scenarios = require('../java/api_scenarios.json');
+const scenarios = require('./api_scenarios.json');
 
 // Validation function
 const validateResponse = (scenario, response) => {
